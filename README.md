@@ -1,9 +1,8 @@
-# Fabric Example Mod
+# Ad-Astra: Origins
 
-## Setup
+Improves compatibility between the Ad-Astra and Origins mod.
 
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
-
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+### Features (Planned)
+- Water breathing origins (i.e. Merling) will be able to breath on land, when wearing a spacesuit, though this will use up oxygen.
+- Dwarfs will not see any effects, when being exposed to sunlight and wearing a space helmet.
+- Enderians will be immunue to water, when wearing a spacesuit.
