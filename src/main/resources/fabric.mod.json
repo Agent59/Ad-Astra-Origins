@@ -1,39 +1,41 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "ad_astra_origins",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Ad-Astra: Origins",
+	"description": "Improves compatibility between the Ad-Astra and Origins mod.",
 	"authors": [
-		"Me!"
+		"agent59"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "",
+		"sources": "https://github.com/Agent59/Ad-Astra-Origins"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/modid/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
+			"dev.agent59.aao.AdAstraOriginsMod"
 		],
 		"client": [
-			"com.example.ExampleModClient"
+			"dev.agent59.aao.AdAstraOriginsModClient"
 		]
 	},
 	"mixins": [
-		"modid.mixins.json",
+		"aao.mixins.json",
 		{
-			"config": "modid.client.mixins.json",
+			"config": "aao.client.mixins.json",
 			"environment": "client"
 		}
 	],
 	"depends": {
-		"fabricloader": ">=0.15.0",
-		"minecraft": "~1.20.4",
+		"fabricloader": ">=${loader_version}",
+		"minecraft": "${minecraft_version}",
 		"java": ">=17",
-		"fabric-api": "*"
+		"fabric-api": ">=${fabric_version}",
+		"ad_astra": ">=${ad_astra_version}",
+		"origins": ">=${origins_version}"
 	},
 	"suggests": {
 		"another-mod": "*"

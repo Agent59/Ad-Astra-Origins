@@ -16,6 +16,30 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+
+	maven { name = 'ParchmentMC'; url = 'https://maven.parchmentmc.org' }
+	maven { url "https://maven.shedaniel.me/" }
+
+	// Required for AdAstra
+	maven { name "Terrarium"; url "https://maven.terraformersmc.com" }
+	maven { name "Team Resourceful"; url "https://maven.teamresourceful.com/repository/maven-public/" }
+
+	// Required for Origins
+	maven { name = "Ladysnake Libs"; url = 'https://maven.ladysnake.org/releases' }
+	maven {
+		url = 'https://maven.cafeteria.dev'
+		content {
+			includeGroup 'net.adriantodt.fabricmc'
+		}
+	}
+	maven {
+		url "https://maven.jamieswhiteshirt.com/libs-release"
+		content {
+			includeGroup "com.jamieswhiteshirt"
+		}
+	}
+	maven { url "https://jitpack.io" }
+	maven { url "https://maven.terraformersmc.com/" }
 }
 
 loom {
@@ -33,7 +57,10 @@ loom {
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	mappings loom.layered() {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-${parchment_mappings}@zip")
+	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
@@ -43,13 +70,37 @@ dependencies {
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
+
+	// Required for Ad Astra
+	modImplementation ("earth.terrarium.botarium:botarium-fabric-${minecraft_version}:${botarium_version}")  { transitive = false }
+	modImplementation "earth.terrarium.adastra:ad_astra-fabric-${minecraft_version}:${ad_astra_version}"
+	modImplementation "com.teamresourceful.resourcefullib:resourcefullib-fabric-${minecraft_version}:${resourcefullib_version}"
+	modImplementation "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-${minecraft_version}:${resourcefulconfig_version}"
+	modImplementation "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-${minecraft_version}:${resourcefulconfig_version}"
+
+	// Origins
+	modImplementation "com.github.apace100:origins-fabric:v${origins_version}"
 }
 
 processResources {
 	inputs.property "version", project.version
 
+	Map<String, Object> properties = [
+			"version": version,
+			"minecraft_version": minecraft_version,
+			"parchment_mappings": parchment_mappings,
+			"loader_version": loader_version,
+			"fabric_version": fabric_version,
+			"ad_astra_version": ad_astra_version,
+			"origins_version": origins_version,
+			"botarium_version": botarium_version,
+			"resourcefulconfig_version": resourcefulconfig_version,
+			"resourcefullib_version": resourcefullib_version,
+	]
+	properties.forEach((k, v) -> inputs.property(k, v))
+
 	filesMatching("fabric.mod.json") {
-		expand "version": project.version
+		expand properties
 	}
 }
 
